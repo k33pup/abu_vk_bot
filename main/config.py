@@ -3,3 +3,4 @@ group_id = 202934978
 login_mongo = ""
 pass_mongo = ""
 kolya = 'loh'
+a = 1
