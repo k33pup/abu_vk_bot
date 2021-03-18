@@ -1,2 +1,2 @@
 # Project exclude paths
-/venv/
+/main/config.py
