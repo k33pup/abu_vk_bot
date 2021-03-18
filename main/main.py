@@ -17,8 +17,6 @@ vk_session = vk_api.VkApi(token=config.TOKEN)
 longpoll = VkBotLongPoll(vk_session, config.group_id)
 characteristics = ["Имя", "Баланс", "В банке", "Статус", "Судимости", "Состояние"]
 
-
-
 for event in longpoll.listen():
     '''
     if event.type == VkBotEventType.group_join:
