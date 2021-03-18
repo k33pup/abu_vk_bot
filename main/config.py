@@ -4,3 +4,4 @@ login_mongo = ""
 pass_mongo = ""
 kolya = 'loh'
 a = 1
+b = 1
