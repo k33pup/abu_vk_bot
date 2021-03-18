@@ -4,17 +4,17 @@ from vk_api.utils import get_random_id
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import random
 import json
-from config import TOKEN, group_id
+import config
 from pymongo import MongoClient
 from random import randint
 from profiles import print_hero, print_inventory
 from keyboard import general_keyboard
 
 cluster = MongoClient(
-    "mongodb+srv://zerochi:muvuskezdu197@abucontroller.vzuyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    f"mongodb+srv://{config.login_mongo}:{config.pass_mongo}@abucontroller.vzuyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = cluster.chats
-vk_session = vk_api.VkApi(token=TOKEN)
-longpoll = VkBotLongPoll(vk_session, group_id)
+vk_session = vk_api.VkApi(token=config.TOKEN)
+longpoll = VkBotLongPoll(vk_session, config.group_id)
 characteristics = ["Имя", "Баланс", "В банке", "Статус", "Судимости", "Состояние"]
 
 for event in longpoll.listen():
