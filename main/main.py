@@ -36,21 +36,6 @@ for event in longpoll.listen():
             name_collection = str(id_peer)
             collection = db[name_collection]
             text_message = msg.object.message["text"]
-
-            if "привет" in text_message:
-                print("fgd")
-                vk_session.method('messages.send',
-                                  {'chat_id': id_chat, 'message': f"Бандит!",
-                                   'random_id': 0,
-                                   "keyboard": general_keyboard})
-                '''
-                if "случайное число" in msg:
-                    vk_session.method('messages.send',
-                                      {'chat_id': id, 'message': f"Ваше число: {random.randint(1, 100)}", 'random_id': 0,
-                                       "keyboard": keyboard})
-                if "цитата" in msg:
-                    
-                '''
             if "получить бандита" in text_message:
                 user_id = event.object.message['from_id']
                 if collection.count_documents({"_id": user_id}):
@@ -83,6 +68,8 @@ for event in longpoll.listen():
                                       {'chat_id': id_chat, 'message': f"Бандит создан!",
                                        'random_id': 0,
                                        "keyboard": general_keyboard})
+            if "Выйти на работу" in text_message:
+                print_hero(event, collection, id_chat, vk_session)
             if "мой бандит" in text_message:
                 print_hero(event, collection, id_chat, vk_session)
             if "мой инвентарь" in text_message:

@@ -10,4 +10,16 @@ def create_general_keyboard():
     return menu
 
 
+def create_work_keyboard():
+    menu = VkKeyboard()
+    menu.add_button(label="Рэкет по городу", color="positive")
+    menu.add_line()
+    menu.add_button(label="Смена на заводе", color="positive")
+    menu.add_line()
+    menu.add_button(label="Грабеж", color="positive")
+    menu = menu.get_keyboard()
+    return menu
+
+
 general_keyboard = create_general_keyboard()
+work_keyboard = create_work_keyboard()
