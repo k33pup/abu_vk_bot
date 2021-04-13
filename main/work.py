@@ -10,25 +10,31 @@ class Work:
             vk_session.method('messages.send',
                               {'chat_id': id_chat, 'message': f"У вас нет бандита!",
                                'random_id': 0, "keyboard": None})
-            return
-        if last_date == 0:
-            collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
-            vk_session.method('messages.send',
-                              {'chat_id': id_chat,
-                               'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
-                               'random_id': 0})
-            return
-        if last_date + datetime.timedelta(minutes=10) > start_date:
-            vk_session.method('messages.send',
-                              {'chat_id': id_chat,
-                               'message': f"Кулдаун на работу!",
-                               'random_id': 0})
-            return
         elif collection.find_one({"_id": user_id})["Начал работу"] != 0:
             vk_session.method('messages.send',
                               {'chat_id': id_chat,
                                'message': f"Вы уже на работе!",
                                'random_id': 0})
+        elif last_date != 0:
+            if last_date + datetime.timedelta(minutes=2) > start_date:
+                vk_session.method('messages.send',
+                                  {'chat_id': id_chat,
+                                   'message': f"Кулдаун на работу!",
+                                   'random_id': 0})
+            else:
+                collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
+                vk_session.method('messages.send',
+                                  {'chat_id': id_chat,
+                                   'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
+                                   'random_id': 0})
+        elif last_date == 0:
+            collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
+            vk_session.method('messages.send',
+                              {'chat_id': id_chat,
+                               'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
+                               'random_id': 0})
+
+
         elif collection.find_one({"_id": user_id})["Начал работу"] == 0:
             collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
             vk_session.method('messages.send',
