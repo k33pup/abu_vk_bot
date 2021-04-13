@@ -52,9 +52,23 @@ class Work:
         elif start_date + datetime.timedelta(minutes=2) <= now_date:
             collection.update_one({"_id": user_id}, {"$set": {"Начал работу": 0}})
             collection.update_one({"_id": user_id}, {"$set": {"Закончил работу": now_date}})
-            vk_session.method('messages.send',
-                              {'chat_id': id_chat, 'message': f"Вы поработали хорошо!",
-                               'random_id': 0, "keyboard": None})
+            chance = random.randint(1, 10)
+            if chance == 1:
+                gold = random.randint(1, 5)
+                were_gold = collection.find_one({"_id": user_id})["Золотые слитки"]
+                collection.update_one({"_id": user_id}, {"$set": {"Золотые слитки": were_gold + gold}})
+                vk_session.method('messages.send',
+                                  {'chat_id': id_chat,
+                                   'message': f"Вы поработали хорошо! И о чудо! Вы ограбили буржуя и получили {gold} золотых слитков!",
+                                   'random_id': 0, "keyboard": None})
+            else:
+                cash = random.randint(1000, 2000)
+                were_cash = collection.find_one({"_id": user_id})["Баланс"]
+                collection.update_one({"_id": user_id}, {"$set": {"Баланс": were_cash + cash}})
+                vk_session.method('messages.send',
+                                  {'chat_id': id_chat,
+                                   'message': f"Вы поработали хорошо! Награбили на {cash} рублей!",
+                                   'random_id': 0, "keyboard": None})
         else:
             vk_session.method('messages.send',
                               {'chat_id': id_chat, 'message': f"Еще рано уходить!",
