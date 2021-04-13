@@ -49,6 +49,7 @@ for event in longpoll.listen():
                         "_id": event.object.message['from_id'],
                         "Имя": "Бандит",
                         "Баланс": str(randint(100, 200)),
+                        "Золотые слитки": 0,
                         "В банке": 0,
                         "Статус": "обычный",
                         "Судимости": 0,
@@ -62,14 +63,14 @@ for event in longpoll.listen():
                                       {'chat_id': id_chat, 'message': f"Бандит создан!",
                                        'random_id': 0,
                                        "keyboard": general_keyboard})
-            if "Работа" in text_message:
+            if "Работа" == text_message.strip():
                 vk_session.method('messages.send',
                                   {'chat_id': id_chat, 'message': f"Выбирай работу!",
                                    'random_id': 0,
                                    "keyboard": work_keyboard})
-            if "Работа Грабеж" in text_message:
+            if "Работа Грабеж" == text_message.strip():
                 all_jobs.do_robbery(event, collection, id_chat, vk_session)
-            if "Закончить работу" in text_message:
+            if "Закончить работу" == text_message.strip():
                 all_jobs.stop_work(event, collection, id_chat, vk_session)
-            if "мой бандит" in text_message:
+            if "мой бандит" == text_message.strip():
                 all_profiles.print_hero(event, collection, id_chat, vk_session)

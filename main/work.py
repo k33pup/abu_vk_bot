@@ -1,4 +1,5 @@
 import datetime
+import random
 
 
 class Work:
@@ -23,20 +24,14 @@ class Work:
                                    'random_id': 0})
             else:
                 collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
+                collection.update_one({"_id": user_id}, {"$set": {"Закончил работу": 0}})
                 vk_session.method('messages.send',
                                   {'chat_id': id_chat,
                                    'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
                                    'random_id': 0})
         elif last_date == 0:
             collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
-            vk_session.method('messages.send',
-                              {'chat_id': id_chat,
-                               'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
-                               'random_id': 0})
-
-
-        elif collection.find_one({"_id": user_id})["Начал работу"] == 0:
-            collection.update_one({"_id": user_id}, {"$set": {"Начал работу": start_date}})
+            collection.update_one({"_id": user_id}, {"$set": {"Закончил работу": 0}})
             vk_session.method('messages.send',
                               {'chat_id': id_chat,
                                'message': f"Ну и опасная же работа!\n Удачи! Через 5 минут забирай награду!",
@@ -54,7 +49,7 @@ class Work:
             vk_session.method('messages.send',
                               {'chat_id': id_chat, 'message': f"Вы не выходили на работу!",
                                'random_id': 0, "keyboard": None})
-        elif start_date + datetime.timedelta(minutes=5) <= now_date:
+        elif start_date + datetime.timedelta(minutes=2) <= now_date:
             collection.update_one({"_id": user_id}, {"$set": {"Начал работу": 0}})
             collection.update_one({"_id": user_id}, {"$set": {"Закончил работу": now_date}})
             vk_session.method('messages.send',
