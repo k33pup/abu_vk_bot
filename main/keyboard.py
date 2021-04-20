@@ -25,4 +25,4 @@ class KeyBoards:
 keyboard = KeyBoards()
 general_keyboard = keyboard.create_general_keyboard()
 work_keyboard = keyboard.create_work_keyboard()
-#    дебилам привет
+#    салам
