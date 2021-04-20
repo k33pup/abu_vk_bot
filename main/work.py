@@ -61,6 +61,13 @@ class Work:
                                   {'chat_id': id_chat,
                                    'message': f"Вы поработали хорошо! И о чудо! Вы ограбили буржуя и получили {gold} золотых слитков!",
                                    'random_id': 0, "keyboard": None})
+            elif chance == 2:
+                collection.update_one({"_id": user_id}, {"$set": {"Баланс": 0}})
+                collection.update_one({"_id": user_id}, {"$set": {"Состояние": "Без сознания"}})
+                vk_session.method('messages.send',
+                                  {'chat_id': id_chat,
+                                   'message': f"Вы решили ограбить скинхеда, а он привел толпу людей и вас избили, а так же забрали все деньги в кармане!",
+                                   'random_id': 0, "keyboard": None})
             else:
                 cash = random.randint(1000, 2000)
                 were_cash = collection.find_one({"_id": user_id})["Баланс"]

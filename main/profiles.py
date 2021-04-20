@@ -3,7 +3,7 @@ from keyboard import general_keyboard
 
 class Profiles:
     def print_hero(self, event, collection, id_chat, vk_session):
-        available_keys = ["Имя", "Баланс", "В банке", "Судимости", "Состояние", "Статус"]
+        available_keys = ["Имя", "Баланс", "В банке", "Золотые слитки", "Судимости", "Состояние", "Статус"]
         user_id = event.object.message['from_id']
         if collection.count_documents({"_id": user_id}) == 0:
             vk_session.method('messages.send',
